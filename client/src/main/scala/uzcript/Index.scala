@@ -1,6 +1,5 @@
 package uzcript
 
-import uzcript.shared.SharedMessages
 import org.scalajs.dom
 import org.scalajs.dom.ext.Ajax
 
@@ -10,7 +9,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 object Index {
   def appendPar(targetNode: dom.Node, text: String): Unit = {
     val parNode = dom.document.createElement("p")
-    parNode.textContent = text
+    parNode.textContent = text.toUpperCase
     targetNode.appendChild(parNode)
     ()
   }
@@ -31,11 +30,8 @@ object Index {
       _ = appendPar(node, text)
     } yield ()).onComplete(_ => ())
   }
-  def setupUI(): Unit = {
-    // add default text
-    /*  dom.document.getElementById("scalajsShoutOut").textContent =
-      SharedMessages.itWorks*/
-  }
 
-  def main(args: Array[String]): Unit = setupUI()
+  def setupUI(): Unit = ()
+
+  def main(args: Array[String]): Unit = ()
 }

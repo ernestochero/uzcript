@@ -9,7 +9,13 @@
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
   </head>
   <body>
-    @content
+    <div id="main-section">
+        @header("Nav header")
+        <main id="main-content" role="main">
+         @content
+        </main>
+        @footer("Div Footer")
+    </div>
     @scalajs.html.scripts("client", routes.Assets.versioned(_).toString, name => getClass.getResource(s"/public/$name") != null)
   </body>
 </html>

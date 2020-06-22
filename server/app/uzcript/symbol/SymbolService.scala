@@ -24,7 +24,7 @@ package object SymbolService {
               repositoryFactory <- SymbolNem.buildRepositoryFactory(symbolHost)
               blockRepository = repositoryFactory.createBlockRepository()
               blockGenesis <- SymbolNem.getBlockGenesis(blockRepository)
-            } yield blockGenesis.getGenerationHash
+            } yield SymbolNem.getGenerationHash(blockGenesis)
         }
 
       }

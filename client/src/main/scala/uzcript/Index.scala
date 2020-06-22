@@ -5,7 +5,7 @@ import org.scalajs.dom.ext.Ajax
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.annotation.JSExportTopLevel
-@JSExportTopLevel("ScalaJSExample")
+@JSExportTopLevel("Index")
 object Index {
   def appendPar(targetNode: dom.Node, text: String): Unit = {
     val parNode = dom.document.createElement("p")

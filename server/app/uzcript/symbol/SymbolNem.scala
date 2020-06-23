@@ -9,7 +9,7 @@ import io.nem.symbol.sdk.model.blockchain.{BlockDuration, BlockInfo}
 import io.nem.symbol.sdk.model.message.{Message, PlainMessage}
 import io.nem.symbol.sdk.model.mosaic._
 import io.nem.symbol.sdk.model.namespace._
-import io.nem.symbol.sdk.model.network.NetworkType
+import io.nem.symbol.sdk.model.network.{NetworkType, RentalFees}
 import io.nem.symbol.sdk.model.transaction._
 import zio.{Task, UIO, ZIO}
 
@@ -83,11 +83,11 @@ object SymbolNem {
       .build()
 
   def aggregateTransaction(transactions: List[Transaction],
-                           feeAmount: Long,
+                           feeAmount: BigInteger,
                            networkType: NetworkType): AggregateTransaction =
     AggregateTransactionFactory
       .createComplete(networkType, transactions.asJava)
-      .maxFee(BigInteger.valueOf(feeAmount))
+      .maxFee(feeAmount)
       .build()
 
   def signTransaction(account: Account,
@@ -227,6 +227,23 @@ object SymbolNem {
       )
   }
 
+  def getMosaicCreationRentalFee(
+    networkRepository: NetworkRepository
+  ): Task[BigInteger] =
+    networkRepository.getRentalFees.toTask.map(_.getEffectiveMosaicRentalFee)
+
+  def getRootNameSpaceCreationRentalFee(
+    networkRepository: NetworkRepository
+  ): Task[BigInteger] =
+    networkRepository.getRentalFees.toTask
+      .map(_.getEffectiveRootNamespaceRentalFeePerBlock)
+
+  def getChildNameSpaceCreationRentalFee(
+    networkRepository: NetworkRepository
+  ): Task[BigInteger] =
+    networkRepository.getRentalFees.toTask
+      .map(_.getEffectiveChildNamespaceRentalFee)
+
   // todo: implement a solution to get from encrypted cache
   def getPrivateKey(address: Address, password: String): UIO[String] =
     Task.succeed(
@@ -241,11 +258,13 @@ object SymbolNem {
                  generationHash: String,
                  transactionRepository: TransactionRepository,
                  mosaicRepository: MosaicRepository,
+                 networkRepository: NetworkRepository,
                  networkType: NetworkType): Task[UzcriptSuccessResponse] = {
     for {
       privateKey <- getPrivateKey(from, "@1234")
       account = Account.createFromPrivateKey(privateKey, networkType)
       mosaicInfo <- mosaicRepository.getMosaic(mosaicId).toTask
+      feeAmount <- getMosaicCreationRentalFee(networkRepository)
       mosaic = new Mosaic(
         mosaicId,
         calculateAbsoluteAmount(amount, mosaicInfo.getDivisibility)
@@ -261,7 +280,7 @@ object SymbolNem {
       )
       aggregateTransaction = SymbolNem.aggregateTransaction(
         transactions,
-        defaultFee,
+        feeAmount,
         networkType
       )
       signedTransaction = SymbolNem.signTransaction(

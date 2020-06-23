@@ -13,10 +13,10 @@ import io.nem.symbol.sdk.model.network.NetworkType
 import io.nem.symbol.sdk.model.transaction._
 import zio.{Task, UIO, ZIO}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import uzcript.commons.Transformers._
 import uzcript.commons.Constants._
-import uzcript.models.MosaicInformation
+import uzcript.shared.MosaicInformation
 import uzcript.shared.UzcriptMessages.UzcriptSuccessResponse
 object SymbolNem {
   def buildRepositoryFactory(

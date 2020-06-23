@@ -1,3 +1,4 @@
+val circe_v = "0.13.0"
 lazy val server = (project in file("server"))
   .settings(commonSettings)
   .settings(
@@ -11,7 +12,6 @@ lazy val server = (project in file("server"))
       "com.vmunier" %% "scalajs-scripts" % "1.1.4",
       "dev.zio" %% "zio" % "1.0.0-RC18-2",
       "dev.zio" %% "zio-interop-cats" % "2.0.0.0-RC12",
-      "com.github.pureconfig" %% "pureconfig" % "0.12.1",
       guice,
       specs2 % Test
     )
@@ -32,6 +32,13 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
   .in(file("shared"))
   .settings(commonSettings)
+  .settings(
+    libraryDependencies ++= Seq(
+      "io.circe" %% "circe-parser" % circe_v,
+      "io.circe" %%% "circe-core" % circe_v,
+      "io.circe" %%% "circe-generic" % circe_v
+    )
+  )
   .jsConfigure(_.enablePlugins(ScalaJSWeb))
 lazy val sharedJvm = shared.jvm
 lazy val sharedJs = shared.js

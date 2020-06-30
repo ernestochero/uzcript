@@ -1,4 +1,4 @@
-val circe_v = "0.13.0"
+val playVersion = "2.8.1"
 lazy val server = (project in file("server"))
   .settings(commonSettings)
   .settings(
@@ -34,9 +34,7 @@ lazy val shared = crossProject(JSPlatform, JVMPlatform)
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "io.circe" %% "circe-parser" % circe_v,
-      "io.circe" %%% "circe-core" % circe_v,
-      "io.circe" %%% "circe-generic" % circe_v
+      "com.typesafe.play" %% "play-json" % playVersion
     )
   )
   .jsConfigure(_.enablePlugins(ScalaJSWeb))

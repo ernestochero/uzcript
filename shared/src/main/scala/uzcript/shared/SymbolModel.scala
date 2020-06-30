@@ -1,10 +1,17 @@
 package uzcript.shared
 
+import play.api.libs.json._
 import java.math.BigInteger
 
-import io.circe.{Decoder, Encoder}
-import io.circe.generic.semiauto._
-import cats.Show
+final case class MosaicInformationFromAddress(IdAsHex: String,
+                                              amount: BigInteger)
+object MosaicInformationFromAddress {
+  implicit val mosaicInformationFromAddressWrites =
+    Json.writes[MosaicInformationFromAddress]
+  implicit val mosaicInformationFromAddressReads =
+    Json.reads[MosaicInformationFromAddress]
+}
+
 final case class MosaicInformation(mosaicId: String,
                                    nameSpaceName: Option[String] = None,
                                    supply: String,
@@ -15,12 +22,8 @@ final case class MosaicInformation(mosaicId: String,
                                    restrictable: Boolean)
 
 object MosaicInformation {
-  implicit val mosaicInformationEnc: Encoder[MosaicInformation] =
-    deriveEncoder[MosaicInformation]
-  implicit val mosaicInformationDec: Decoder[MosaicInformation] =
-    deriveDecoder[MosaicInformation]
-  implicit val mosaicInformationShow: Show[MosaicInformation] =
-    Show.fromToString[MosaicInformation]
+  implicit val mosaicInformationWrites = Json.writes[MosaicInformation]
+  implicit val mosaicInformationReads = Json.reads[MosaicInformation]
 }
 
 final case class AccountInformation(address: String,
@@ -30,12 +33,8 @@ final case class AccountInformation(address: String,
                                     mosaics: List[MosaicInformationFromAddress])
 
 object AccountInformation {
-  implicit val accountInformationEnc: Encoder[AccountInformation] =
-    deriveEncoder[AccountInformation]
-  implicit val accountInformationDec: Decoder[AccountInformation] =
-    deriveDecoder[AccountInformation]
-  implicit val accountInformationShow: Show[AccountInformation] =
-    Show.fromToString[AccountInformation]
+  implicit val accountInformationWrites = Json.writes[AccountInformation]
+  implicit val accountInformationReads = Json.reads[AccountInformation]
 }
 
 final case class NamespaceInformation(namespaceName: String,
@@ -47,26 +46,8 @@ final case class NamespaceInformation(namespaceName: String,
                                       alias: String)
 
 object NamespaceInformation {
-  implicit val namespaceInformationEnc: Encoder[NamespaceInformation] =
-    deriveEncoder[NamespaceInformation]
-  implicit val namespaceInformationDec: Decoder[NamespaceInformation] =
-    deriveDecoder[NamespaceInformation]
-  implicit val namespaceInformationShow: Show[NamespaceInformation] =
-    Show.fromToString[NamespaceInformation]
-}
-
-final case class MosaicInformationFromAddress(IdAsHex: String,
-                                              amount: BigInteger)
-object MosaicInformationFromAddress {
-  implicit val mosaicInformationFromAddressEnc
-    : Encoder[MosaicInformationFromAddress] =
-    deriveEncoder[MosaicInformationFromAddress]
-  implicit val mosaicInformationFromAddressDec
-    : Decoder[MosaicInformationFromAddress] =
-    deriveDecoder[MosaicInformationFromAddress]
-  implicit val mosaicInformationFromAddressShow
-    : Show[MosaicInformationFromAddress] =
-    Show.fromToString[MosaicInformationFromAddress]
+  implicit val namespaceInformationWrites = Json.writes[NamespaceInformation]
+  implicit val namespaceInformationReads = Json.reads[NamespaceInformation]
 }
 
 sealed trait AliasActionType

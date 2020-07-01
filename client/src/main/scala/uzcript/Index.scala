@@ -9,7 +9,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 object Index {
   def appendPar(targetNode: dom.Node, text: String): Unit = {
     val parNode = dom.document.createElement("p")
-    parNode.textContent = text.toUpperCase
+    parNode.textContent = text
     targetNode.appendChild(parNode)
     ()
   }

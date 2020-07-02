@@ -1,6 +1,11 @@
 @(message: String)
 
-@main("Play with Scala.js") {
+@stylesheets = {}
+@script = {}
+@navigation = {@views.html.navigation.navBar()}
+@footer = {}
+
+@main(title = s"Index")(stylesheets)(script)(navigation)(footer) {
   <section id="index">
       <h2>Play and Scala.js share a same message</h2>
       <button id="uzbutton" type="button" onclick="addClickedMessage()">Click me!</button>

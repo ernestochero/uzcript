@@ -1,0 +1,19 @@
+@()
+
+@import views.html.navigation.brand
+@import views.html.navigation.nabItems
+
+<header>
+    <nav class="navbar navbar-expand-sm" role="navigation">
+        <div class="container container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    @brand(true)
+                    <div class="collapse navbar-collapse" id="main-navbar">
+                        @nabItems(true)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

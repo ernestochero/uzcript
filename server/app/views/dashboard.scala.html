@@ -1,6 +1,11 @@
 @(message: String)
 
-@main("uzcript dashboard") {
+@stylesheets = {}
+@script = {}
+@navigation = {}
+@footer = {}
+
+@main(title = s"Dashboard")(stylesheets)(script)(navigation)(footer) {
   <section id="dashboard">
       <h2>Here will be uzcript dashboard</h2>
       <h2>BlockChain Nem - Testing</h2>

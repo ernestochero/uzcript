@@ -1,0 +1,18 @@
+@(isUserLoggedIn: Boolean)
+
+@url1 = @{
+        if(isUserLoggedIn) {
+            "#"
+        } else {
+            "#"
+        }
+    }
+
+<div class="navbar-header">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="@url1" tabindex="0">
+        <img src="@routes.Assets.versioned("images/logo.png")" alt="logo">
+    </a>
+</div>

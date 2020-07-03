@@ -26,7 +26,11 @@ class SymbolController(val controllerComponents: ControllerComponents)(
   }
 
   def dashboard: Action[AnyContent] = Action {
-    Ok(views.html.dashboard("Hello World"))
+    Ok(views.html.dashboard(""))
+  }
+
+  def profile: Action[AnyContent] = Action {
+    Ok(views.html.profile(""))
   }
 
 }

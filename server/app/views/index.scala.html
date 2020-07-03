@@ -3,12 +3,14 @@
 @stylesheets = {}
 @script = {}
 @navigation = {@views.html.navigation.navBar()}
-@footer = {}
+@footer = {@views.html.footer("Uzcript")}
 
 @main(title = s"Index")(stylesheets)(script)(navigation)(footer) {
   <section id="index">
-      <h2>Play and Scala.js share a same message</h2>
-      <button id="uzbutton" type="button" onclick="addClickedMessage()">Click me!</button>
-      <div id="content"></div>
+    <div class="jumbotron">
+        <h2>Play and Scala.js share a same message</h2>
+        <button id="uzbutton" type="button" onclick="addClickedMessage()">Click me!</button>
+        <div id="content"></div>
+    </div>
   </section>
 }

@@ -1,0 +1,14 @@
+@(message: String)
+
+@stylesheets = {}
+@script = {}
+@navigation = {@views.html.navigation.navBar()}
+@footer = {@views.html.footer("Uzcript")}
+
+@main(title = s"Profile")(stylesheets)(script)(navigation)(footer) {
+    <section id="profile">
+       <div class="jumbotron">
+           <h2>Here will be uzcript profile</h2>
+       </div>
+    </section>
+}

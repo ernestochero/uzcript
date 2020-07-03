@@ -1,19 +1,19 @@
 @(isUserLoggedIn: Boolean)
 
 @dashboard = @{
-    ""
+    "dashboard"
 }
 
 @profileUrl = @{
-    ""
+    "profile"
 }
 
 <ul class="navbar-nav">
     <li class="nav-item active @if(!isUserLoggedIn){hidden}">
-        <a href="#" class="nav-link" id="nav-dashboard">Dashboard</a>
+        <a class="nav-link" id="nav-dashboard" href=@dashboard >Dashboard</a>
     </li>
 
     <li class="nav-item @if(!isUserLoggedIn){hidden}">
-        <a href="#" class="nav-link" id="nav-profile">Profile</a>
+        <a class="nav-link" id="nav-profile" href=@profileUrl >Profile</a>
     </li>
 </ul>

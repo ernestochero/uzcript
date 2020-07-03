@@ -2,14 +2,16 @@
 
 @stylesheets = {}
 @script = {}
-@navigation = {}
-@footer = {}
+@navigation = {@views.html.navigation.navBar()}
+@footer = {@views.html.footer("Uzcript")}
 
 @main(title = s"Dashboard")(stylesheets)(script)(navigation)(footer) {
   <section id="dashboard">
-      <h2>Here will be uzcript dashboard</h2>
-      <h2>BlockChain Nem - Testing</h2>
-      <button id="genesis-button" type="button" onclick="getBlockGenesisResponse()">GetBlockGenesis - Click me!</button>
-      <div id="genesis-information"></div>
+      <div class="jumbotron">
+          <h2>Here will be uzcript dashboard</h2>
+          <h2>BlockChain Nem - Testing</h2>
+          <button id="genesis-button" type="button" onclick="getBlockGenesisResponse()">GetBlockGenesis - Click me!</button>
+          <div id="genesis-information"></div>
+      </div>
   </section>
 }

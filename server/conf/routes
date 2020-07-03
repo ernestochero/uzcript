@@ -7,7 +7,7 @@ GET        /                            controllers.SymbolController.index
 
 # Blog page
 GET        /dashboard                   controllers.SymbolController.dashboard
-
+GET        /profile                     controllers.SymbolController.profile
 # Nem Methods
 GET       /genesis                      controllers.SymbolController.genesis
 # Prefix must match `play.assets.urlPrefix`

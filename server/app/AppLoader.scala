@@ -10,9 +10,10 @@ import play.api.{
   Configuration,
   LoggerConfigurator
 }
-import uzcript.commons.AppContext
+
 import controllers.{AssetsComponents, SymbolController}
 import zio._
+import uzcript.commons.Environments._
 class AppLoader extends ApplicationLoader {
   override def load(context: ApplicationLoader.Context): Application = {
     val configuration = Configuration(ConfigFactory.load())
@@ -29,10 +30,11 @@ package object modules {
       extends BuiltInComponentsFromContext(context)
       with AssetsComponents {
     private val reservation
-      : Reservation[Any, Nothing, ZLayer[ZEnv, Throwable, AppContext]] =
-      Runtime.default.unsafeRun(AppContext.live.memoize.reserve)
+      : Reservation[Any, Nothing, ZLayer[ZEnv, Throwable, AppEnvironment]] =
+      Runtime.default.unsafeRun(appEnvironment.memoize.reserve)
 
-    private implicit val appContext: ZLayer[zio.ZEnv, Throwable, AppContext] =
+    private implicit val appContext
+      : ZLayer[zio.ZEnv, Throwable, AppEnvironment] =
       Runtime.default.unsafeRun(reservation.acquire)
 
     applicationLifecycle.addStopHook(

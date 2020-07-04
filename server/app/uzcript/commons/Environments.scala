@@ -7,11 +7,12 @@ import zio.{ULayer, ZLayer, ZEnv}
 
 object Environments {
   type HttpContext[A] = ZLayer[ZEnv, Throwable, A]
-  type AppContext = SymbolService with UserRepository
+  type AppEnvironment = SymbolService
   val symbolService: ULayer[SymbolService] = SymbolService.live
   val mongoConfig
     : ULayer[MongoService] = Configuration.live >>> MongoService.live
   val usersRepository
     : ULayer[UserRepository] = mongoConfig >>> UserRepository.live
-  val appContext = symbolService ++ usersRepository
+  val appEnvironment: ZLayer[ZEnv, Throwable, AppEnvironment] =
+    symbolService
 }

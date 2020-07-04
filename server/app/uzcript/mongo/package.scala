@@ -17,8 +17,8 @@ package object mongo {
 
   def getUserByAddress(
     address: String
-  ): RIO[UserRepository, Task[Option[User]]] =
-    RIO.access(_.get.getUserByAddress(address))
+  ): ZIO[UserRepository, Throwable, Option[User]] =
+    RIO.accessM(_.get.getUserByAddress(address))
 
   object MongoService {
     lazy val userCodecProvider: CodecProvider =

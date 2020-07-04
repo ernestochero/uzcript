@@ -7,9 +7,6 @@ import scala.concurrent.Future
 import uzcript.commons.Environments._
 
 package object commons {
-  object AppContext {
-    val live = appContext
-  }
   implicit class ActionBuilderOps[+R[_], B](ab: ActionBuilder[R, B]) {
     case class AsyncTaskBuilder[Ctx <: zio.Has[_]](dummy: Boolean = false) {
       def apply(

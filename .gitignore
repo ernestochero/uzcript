@@ -33,3 +33,6 @@ bin/
 
 # metals
 .metals/
+
+# data
+docker/data

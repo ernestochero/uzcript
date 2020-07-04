@@ -1,19 +1,15 @@
 package uzcript
 
 import play.api.mvc.{Action, ActionBuilder, BodyParser, Result}
-import uzcript.symbol.SymbolService.SymbolService
-import zio.{RIO, ZEnv, ZIO, ZLayer}
-import zio.Runtime
+import zio.{RIO, Runtime, ULayer, ZEnv, ZIO}
 
 import scala.concurrent.Future
+import uzcript.commons.Environments._
 
 package object commons {
-  type AppContext = SymbolService
-  type HttpContext[A] = ZLayer[ZEnv, Throwable, A]
   object AppContext {
-    val live: ZLayer[ZEnv, Throwable, AppContext] = SymbolService.live
+    val live = appContext
   }
-
   implicit class ActionBuilderOps[+R[_], B](ab: ActionBuilder[R, B]) {
     case class AsyncTaskBuilder[Ctx <: zio.Has[_]](dummy: Boolean = false) {
       def apply(

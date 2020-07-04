@@ -3,6 +3,12 @@ package uzcript.shared
 import play.api.libs.json._
 import java.math.BigInteger
 
+final case class User(address: String, name: String, lastName: String)
+object User {
+  implicit val userWrites = Json.writes[User]
+  implicit val userReads = Json.reads[User]
+}
+
 final case class MosaicInformationFromAddress(IdAsHex: String,
                                               amount: BigInteger)
 object MosaicInformationFromAddress {

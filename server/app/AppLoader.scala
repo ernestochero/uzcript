@@ -13,6 +13,7 @@ import play.api.{
 import uzcript.commons.AppContext
 import controllers.{AssetsComponents, SymbolController}
 import zio._
+import uzcript.commons.Environments._
 class AppLoader extends ApplicationLoader {
   override def load(context: ApplicationLoader.Context): Application = {
     val configuration = Configuration(ConfigFactory.load())

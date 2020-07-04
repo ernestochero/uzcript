@@ -2,9 +2,10 @@ package controllers
 
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
-import uzcript.commons.{AppContext, HttpContext, _}
+import uzcript.commons._
 import uzcript.shared.SharedMessages
 import uzcript.symbol.SymbolService.SymbolService
+import uzcript.commons.Environments._
 
 class SymbolController(val controllerComponents: ControllerComponents)(
   implicit c: HttpContext[AppContext]

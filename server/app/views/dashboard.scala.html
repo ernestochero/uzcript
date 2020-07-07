@@ -1,17 +1,19 @@
 @(message: String)
 
+@import views.html.investments._viewInvestments
+
 @stylesheets = {}
 @script = {}
 @navigation = {@views.html.navigation.navBar()}
 @footer = {@views.html.footer("Uzcript")}
 
 @main(title = s"Dashboard")(stylesheets)(script)(navigation)(footer) {
-  <section id="dashboard">
-      <div class="jumbotron">
-          <h2>Here will be uzcript dashboard</h2>
-          <h2>BlockChain Nem - Testing</h2>
-          <button id="genesis-button" type="button" onclick="getBlockGenesisResponse()">GetBlockGenesis - Click me!</button>
-          <div id="genesis-information"></div>
+  <section id="investment-management">
+      <div class="container">
+          <div class="begin-investment-title">
+              <h2>Inversiones</h2>
+          </div>
+          @_viewInvestments()
       </div>
   </section>
 }

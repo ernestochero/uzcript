@@ -1,4 +1,3 @@
-import com.typesafe.config.ConfigFactory
 import play.api.ApplicationLoader.Context
 import play.api.mvc.EssentialFilter
 import router.Routes

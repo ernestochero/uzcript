@@ -13,7 +13,6 @@ lazy val server = (project in file("server"))
       "dev.zio" %% "zio" % "1.0.0-RC21",
       "org.typelevel" %% "cats-effect" % "2.1.3",
       "dev.zio" %% "zio-interop-cats" % "2.1.3.0-RC16",
-      "com.github.pureconfig" %% "pureconfig" % "0.12.1",
       "org.mongodb.scala" %% "mongo-scala-driver" % "2.9.0",
       guice,
       specs2 % Test

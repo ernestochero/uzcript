@@ -1,4 +1,3 @@
-import com.typesafe.config.ConfigFactory
 import play.api.ApplicationLoader.Context
 import play.api.mvc.EssentialFilter
 import router.Routes
@@ -7,7 +6,6 @@ import play.api.{
   Application,
   ApplicationLoader,
   BuiltInComponentsFromContext,
-  Configuration,
   LoggerConfigurator
 }
 
@@ -16,29 +14,31 @@ import zio._
 import uzcript.commons.Environments._
 class AppLoader extends ApplicationLoader {
   override def load(context: ApplicationLoader.Context): Application = {
-    val configuration = Configuration(ConfigFactory.load())
     LoggerConfigurator(context.environment.classLoader).foreach {
       _.configure(context.environment, context.initialConfiguration, Map.empty)
     }
-    new modules.AppComponentsInstances(
-      context.copy(initialConfiguration = configuration)
-    ).application
+    new modules.AppComponentsInstances(context).application
   }
 }
 package object modules {
   class AppComponentsInstances(context: Context)
       extends BuiltInComponentsFromContext(context)
       with AssetsComponents {
-    private val reservation
-      : Reservation[Any, Nothing, ZLayer[ZEnv, Throwable, AppEnvironment]] =
-      Runtime.default.unsafeRun(appEnvironment.memoize.reserve)
+    import zio.interop.catz._
 
-    private implicit val appContext
-      : ZLayer[zio.ZEnv, Throwable, AppEnvironment] =
-      Runtime.default.unsafeRun(reservation.acquire)
+    implicit val runtime: Runtime[ZEnv] = Runtime.default
 
+    type Eff[A] = ZIO[ZEnv, Throwable, A]
+
+    private implicit val (
+      appContext: ZLayer[ZEnv, Throwable, AppEnvironment],
+      release: Eff[Unit]
+    ) =
+      Runtime.default.unsafeRun(
+        appEnvironment.memoize.toResource[Eff].allocated
+      )
     applicationLifecycle.addStopHook(
-      () => Runtime.default.unsafeRunToFuture(reservation.release(Exit.unit))
+      () => Runtime.default.unsafeRunToFuture(release)
     )
 
     override def router: Router =
